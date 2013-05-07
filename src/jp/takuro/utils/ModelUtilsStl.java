@@ -31,7 +31,7 @@ public class ModelUtilsStl extends ModelUtils{
 		try{
 			raf.seek(HEADER_LENGTH);
 			int count = this.readInt(raf.readInt());
-			System.out.println(count + " triangles.");
+			//System.out.println(count + " triangles.");
 			return count;
 		} catch(Exception e){
 			throw new Error(e);

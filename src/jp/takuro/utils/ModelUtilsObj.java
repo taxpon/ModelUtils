@@ -35,11 +35,9 @@ public class ModelUtilsObj extends ModelUtils{
 	private void read(RandomAccessFile raf){
 		int vertices = 0;
 		int triangles = 0;
-		int count = 0;
 		
 		try {
 			while(true){
-				count++;
 				
 				String tmpline = raf.readLine();
 				if(tmpline == null) break;
@@ -70,8 +68,8 @@ public class ModelUtilsObj extends ModelUtils{
 			}
 		} catch (EOFException eofe) {
 			// TODO: handle exception
-			System.out.println("Vertices :" + vertices);
-			System.out.println("Triagnles :" + triangles);
+			//System.out.println("Vertices :" + vertices);
+			//System.out.println("Triagnles :" + triangles);
 			
 		} catch (IOException e) {
 			// TODO: handle exception
@@ -86,8 +84,8 @@ public class ModelUtilsObj extends ModelUtils{
 		
 		double total_volume = 0;
 		
-		System.out.println("vertice_list length : "+ vertice_list.size());
-		System.out.println("face_list length : "+ face_list.size());
+		//System.out.println("vertice_list length : "+ vertice_list.size());
+		//System.out.println("face_list length : "+ face_list.size());
 		
 		for(FaceObj tmpfo: face_list){
 			total_volume += calculateSignedVolume(new TriangleObj(
