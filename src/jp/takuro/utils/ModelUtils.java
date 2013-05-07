@@ -1,13 +1,6 @@
 package jp.takuro.utils;
 
-public class ModelUtils {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hello, world!");
-	}
-
+public abstract class ModelUtils {
+	public abstract double calculateVolume(String filename);
+	public abstract double calculateSurface(String filename);
 }
