@@ -1,12 +1,18 @@
 package jp.takuro.utils;
 
 import java.io.*;
-import java.nio.*;
 import javax.vecmath.*;
 
 public class ModelUtilsStl extends ModelUtils{
-	private int HEADER_LENGTH = 80;
 	
+	private int HEADER_LENGTH = 80; // Length of the header of the stl *binary* file
+	
+	/**
+	* Calculate volume of 3d data (.stl)
+	* @author Takuro Wada
+	* @param filename Path of the 3d data
+	* @return Volume (cm3)
+	*/
 	public double calculateVolume(String filename){
 		int triangle_count;
 		double total_volume = 0;
@@ -23,6 +29,13 @@ public class ModelUtilsStl extends ModelUtils{
 		return total_volume;
 	}
 	
+	/**
+	* Calculate surface area of 3d data (.stl)
+	* Not implemented
+	* @author Takuro Wada
+	* @param filename Path of the 3d data
+	* @return Surface area (cm3)
+	*/
 	public double calculateSurface(String filename){
 		return 1.0;
 	}
@@ -78,40 +91,5 @@ public class ModelUtilsStl extends ModelUtils{
 			return t;
 		}
 	}
-	
-	private double calculateSignedVolume(TriangleStl t){
-		
-		double v321 = t.p3.x * t.p2.y * t.p1.z;
-		double v231 = t.p2.x * t.p3.y * t.p1.z;
-		double v312 = t.p3.x * t.p1.y * t.p2.z;
-		double v132 = t.p1.x * t.p3.y * t.p2.z;
-		double v213 = t.p2.x * t.p1.y * t.p3.z;
-		double v123 = t.p1.x * t.p2.y * t.p3.z;
-	
-		double sined_volume = (-v321 + v231 + v312 - v132 - v213 + v123)/6.0f;
-		return sined_volume;
-	}
-	
-	// ユーティリティ関数
-	private int readInt(int in_num){
-		ByteBuffer bb = ByteBuffer.allocate(4);
-		bb.putInt(in_num);
-		bb.order(ByteOrder.LITTLE_ENDIAN);
-		return bb.getInt(0);
-	}
-	
-	private float readFloat(float in_float){
-		ByteBuffer bb = ByteBuffer.allocate(4);
-		bb.putFloat(in_float);
-		bb.order(ByteOrder.LITTLE_ENDIAN);
-		return bb.getFloat(0);
-	}
-}
-
-class TriangleStl{
-	Vector3d n;
-	Vector3d p1;
-	Vector3d p2;
-	Vector3d p3;
 }
 

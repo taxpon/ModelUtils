@@ -9,6 +9,12 @@ public class ModelUtilsObj extends ModelUtils{
 	private ArrayList<Vector3d> vertice_list = new ArrayList<Vector3d>();
 	private ArrayList<FaceObj> face_list = new ArrayList<FaceObj>();
 	
+	/**
+	* Calculate volume of 3d data (.obj)
+	* @author Takuro Wada
+	* @param filename Path of the 3d data
+	* @return Volume (cm3)
+	*/
 	public double calculateVolume(String filename){
 		
 		double total_volume = 0;
@@ -16,18 +22,22 @@ public class ModelUtilsObj extends ModelUtils{
 		try {
 			RandomAccessFile raf = new RandomAccessFile(filename, "r");
 			this.read(raf);
-			
 			total_volume = this.calculateTotalVolume();
-			
 			raf.close();
 		} catch (IOException e) {
-			// TODO: handle exception
 			System.out.println("Catch exception :" + e);
 		}
 		
 		return total_volume;
 	}
 	
+	/**
+	* Calculate surface area of 3d data (.obj)
+	* Not implemented
+	* @author Takuro Wada
+	* @param filename Path of the 3d data
+	* @return Surface area (cm3)
+	*/
 	public double calculateSurface(String filename){
 		return 1.0;
 	}
@@ -67,26 +77,15 @@ public class ModelUtilsObj extends ModelUtils{
 				}
 			}
 		} catch (EOFException eofe) {
-			// TODO: handle exception
-			//System.out.println("Vertices :" + vertices);
-			//System.out.println("Triagnles :" + triangles);
-			
 		} catch (IOException e) {
-			// TODO: handle exception
 		} catch (NullPointerException e){
-			
 		} finally{
-		//	return;
 		}
 	}
 	
 	private double calculateTotalVolume(){
 		
 		double total_volume = 0;
-		
-		//System.out.println("vertice_list length : "+ vertice_list.size());
-		//System.out.println("face_list length : "+ face_list.size());
-		
 		for(FaceObj tmpfo: face_list){
 			total_volume += calculateSignedVolume(new TriangleObj(
 								vertice_list.get(tmpfo.p1), 
@@ -95,32 +94,6 @@ public class ModelUtilsObj extends ModelUtils{
 		}
 		
 		return total_volume;
-	}
-	
-	private double calculateSignedVolume(TriangleObj t){
-		
-		double v321 = t.p3.x * t.p2.y * t.p1.z;
-		double v231 = t.p2.x * t.p3.y * t.p1.z;
-		double v312 = t.p3.x * t.p1.y * t.p2.z;
-		double v132 = t.p1.x * t.p3.y * t.p2.z;
-		double v213 = t.p2.x * t.p1.y * t.p3.z;
-		double v123 = t.p1.x * t.p2.y * t.p3.z;
-	
-		double sined_volume = (-v321 + v231 + v312 - v132 - v213 + v123)/6.0f;
-		return sined_volume;
-	}
-
-}
-
-class TriangleObj{
-	Vector3d p1;
-	Vector3d p2;
-	Vector3d p3;
-	
-	public TriangleObj(Vector3d p1, Vector3d p2, Vector3d p3){
-		this.p1 = p1;
-		this.p2 = p2;
-		this.p3 = p3;
 	}
 }
 
